@@ -14,18 +14,26 @@ class MenuItemManager:
         self._menu = []
 
     def add_menu_item(self, menu_item):
+
+        number = len(self._menu) + 1
+
         """adds a menu item to the menu list"""   
         if menu_item not in self._menu:
             self._menu.append(menu_item)
+            menu_item.set_id(number)
 
 
+    def remove_menu_item(self, menu_id):
 
-    def remove_menu_item(self, menu_item):
-        if menu_item in self._menu:
-            self._menu.remove(menu_item)
+        if self.menu_exists(menu_id) is True:
+            for menu in self._menu:
+                if menu.get_id() == menu_id:
+                    self._menu.remove(menu)
 
+        return
     
     def get_by_id(self, id):
+
         for menu_item in self._menu:
             if menu_item.get_id() == id:
                 return menu_item
@@ -36,8 +44,6 @@ class MenuItemManager:
             if menu_item.get_type() == item_type:
                 menu_list.append(menu_item.menu_item_description())
         return menu_list                
-
-        
 
     def get_all(self):
         menu_list = []
@@ -89,8 +95,13 @@ class MenuItemManager:
 
         return stats
 
+    def menu_exist(self, id):
 
+        for menu in self._menu:
+            if menu.get_id() == id:
+                return True
 
+        return False
 
 
 
