@@ -8,32 +8,41 @@ from drink import Drink
 
 
 class MenuItemManager:
+  
     """ creates menu item manager """    
     def __init__(self, restaurant_name):
         self._restaurant_name= restaurant_name
         self._menu = []
+        self._next_available_id = int(0)
 
     def add_menu_item(self, menu_item):
-
-        number = len(self._menu) + 1
-
         """adds a menu item to the menu list"""   
+        self._next_available_id = self._next_available_id + 1
         if menu_item not in self._menu:
             self._menu.append(menu_item)
-            menu_item.set_id(number)
+            menu_item.set_id(self._next_available_id)
+        
+        return self._next_available_id
+
+    def menu_exist(self, id):
+        for menu in self._menu:
+            if menu.get_id() == id:
+                return True
+
+        return False
 
 
-    def remove_menu_item(self, menu_id):
+    def remove_menu_item(self, id):
+        if self.menu_exist(id) is True:
+            for menu_item in self._menu:
+                if menu_item.get_id() is id:
+                    self._menu.remove(menu_item)
 
-        if self.menu_exists(menu_id) is True:
-            for menu in self._menu:
-                if menu.get_id() == menu_id:
-                    self._menu.remove(menu)
-
-        return
     
-    def get_by_id(self, id):
 
+
+
+    def get_by_id(self, id):
         for menu_item in self._menu:
             if menu_item.get_id() == id:
                 return menu_item
@@ -45,6 +54,8 @@ class MenuItemManager:
                 menu_list.append(menu_item.menu_item_description())
         return menu_list                
 
+        
+
     def get_all(self):
         menu_list = []
         for menu_item in self._menu:
@@ -52,8 +63,15 @@ class MenuItemManager:
         return menu_list                
  
 
-    def update(self, id):
-        pass
+    def update(self, menu_item):
+        id = menu_item.get_id()
+        if self.menu_exist(id) is False:
+            raise ValueError("id does not exist")
+        for index, menu_item in enumerate(self._menu, 0):
+            if menu_item.get_id() == id:
+                break
+        self._menu[index] = menu_item
+
 
 
 
@@ -95,13 +113,8 @@ class MenuItemManager:
 
         return stats
 
-    def menu_exist(self, id):
 
-        for menu in self._menu:
-            if menu.get_id() == id:
-                return True
 
-        return False
 
 
 
