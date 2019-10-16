@@ -13,17 +13,20 @@ def print_report(menu_item_manager):
     print("  Foods: %d " % stats.get_num_foods())
     print("Description: %s" % menu_item_manager.get_all_by_type("food"))
     print("Description: %s" % menu_item_manager.get_all_by_type("drink"))
+    print("  All menu items %s " % menu_item_manager.get_all())
     print("  Drinks: %d " % stats.get_num_drinks())
     print("  Average price of food: %f " % stats.get_avg_price_food())
+    print("  Average price of drink: %f " % stats.get_avg_price_drink())
+
     
     
 
 
 def main():
-    barley_bread = Food("barley_bread", 12, datetime.date(2018, 8, 8), 12.99, 149, "India", "Barley", "small", True)
-    chilly_samosa = Food("chilly_samosa", 2, datetime.date(2018, 8, 8), 4.99, 149, "India", "vegetables", "small", True)
+    barley_bread = Food("barley bread", 12, datetime.date(2018, 8, 8), 12.99, 149, "India", "Barley", "small", True)
+    chilly_samosa = Food("chilly samosa", 2, datetime.date(2018, 8, 8), 4.99, 149, "India", "vegetables", "small", True)
 
-    mango_lasi = Drink("mango_lasi", 8, datetime.date(2017, 9, 12), 4.99, 80, "lasi producer ltd", 129.99, False, False)
+    mango_lasi = Drink("mango lasi", 8, datetime.date(2017, 9, 12), 6.99, 80, "lasi producer ltd", 129.99, False, False)
 
 
 

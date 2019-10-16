@@ -18,11 +18,6 @@ class MenuItemManager:
         if menu_item not in self._menu:
             self._menu.append(menu_item)
 
-    def next_available_id(self, menu_item):
-        menu_item_id = id(menu_item)
-        menu_item.set_id(menu_item_id)
-        return menu_item_id
-
 
 
     def remove_menu_item(self, menu_item):
@@ -45,18 +40,14 @@ class MenuItemManager:
         
 
     def get_all(self):
-
         menu_list = []
         for menu_item in self._menu:
-            menu_list.append(menu_item)
-
-        return menu_list 
-                
-                
+                menu_list.append(menu_item.menu_item_description())
+        return menu_list                
+ 
 
     def update(self, id):
         pass
-
 
 
 
