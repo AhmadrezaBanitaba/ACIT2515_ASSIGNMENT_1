@@ -4,86 +4,109 @@ from food import Food
 from drink import Drink
 
 
-
-
-
 class MenuItemManager:
-  
-    """ creates menu item manager """    
+    """ creates menu item manager """
+
     def __init__(self, restaurant_name):
-        self._restaurant_name= restaurant_name
+
+        self._validate_parameter(restaurant_name, "restaurant_name")
+
+        self._restaurant_name = restaurant_name
+
         self._menu = []
+
         self._next_available_id = int(0)
 
     def add_menu_item(self, menu_item):
-        """adds a menu item to the menu list"""   
-        self._next_available_id = self._next_available_id + 1
-        if menu_item not in self._menu:
+        """adds a menu item to the menu list"""
+
+        self._validate_parameter(menu_item, "menu_item")
+
+        self._next_available_id += 1
+        menu_item.set_id(self._next_available_id)
+
+        if self.menu_exist(menu_item.get_id()) is False:
             self._menu.append(menu_item)
-            menu_item.set_id(self._next_available_id)
-        
+
         return self._next_available_id
 
     def menu_exist(self, id):
+        """ checks whether the menu item exists """
+        self._validate_parameter(id, "id")
+        self._validate_id(id)
         for menu in self._menu:
             if menu.get_id() == id:
                 return True
 
         return False
 
-
     def remove_menu_item(self, id):
+        """ removes menu item by id """
+        self._validate_parameter(id, "id")
+        self._validate_id(id)
+
         if self.menu_exist(id) is True:
             for menu_item in self._menu:
                 if menu_item.get_id() is id:
                     self._menu.remove(menu_item)
 
-    
-
-
-
     def get_by_id(self, id):
+        """ returns menu item by id """
+
+        self._validate_parameter(id, "id")
+        self._validate_id(id)
+
         for menu_item in self._menu:
             if menu_item.get_id() == id:
                 return menu_item
-    
+
     def get_all_by_type(self, item_type):
+        """ returns menu items by id """
+        self._validate_parameter(item_type, "item_type")
+        self._validate_type(item_type)
+
         menu_list = []
         for menu_item in self._menu:
             if menu_item.get_type() == item_type:
                 menu_list.append(menu_item.menu_item_description())
-        return menu_list                
-
-        
+        return menu_list
 
     def get_all(self):
+        """ returns all menu items """
+
+        return self._menu
+
+    def get_all_menu_item(self):
+        """ returns all menu items """
         menu_list = []
-        for menu_item in self._menu:
-                menu_list.append(menu_item.menu_item_description())
-        return menu_list                
- 
+        for i in range(len(self._menu)):
+            menu_list.append(self._menu[i].get_menu_item_name())
+
+        return menu_list
 
     def update(self, menu_item):
+        """ updates menu ite by id """
+
+        self._validate_parameter(menu_item, "menu_item")
+
         id = menu_item.get_id()
+
         if self.menu_exist(id) is False:
             raise ValueError("id does not exist")
-        for index, menu_item in enumerate(self._menu, 0):
-            if menu_item.get_id() == id:
+        for index, menu_items in enumerate(self._menu, 0):
+            if menu_items.get_id() == id:
+                self._menu[index] = menu_item
                 break
-        self._menu[index] = menu_item
-
-
-
 
     def get_menu_item_stats(self):
+        """ returns menu item stats """
 
-        """ gets menu item stats """
         total_num_menu_items = int(0)
         num_foods = int(0)
         num_drinks = int(0)
-        avg_price_food= float(0)
+        avg_price_food = float(0)
         avg_price_drink = float(0)
-        item_price= float(0)
+        item_price = float(0)
         food_price_list = []
         drink_price_list = []
 
@@ -98,24 +121,38 @@ class MenuItemManager:
             if menu_item.get_type() == "drink":
                 item_price = menu_item.get_price()
                 drink_price_list.append(item_price)
-                avg_price_drink = sum(drink_price_list)/len(drink_price_list)
-                
-
-
+                avg_price_drink = sum(drink_price_list) / len(drink_price_list)
 
         for menu_item in self._menu:
             if menu_item.get_type() == "food":
                 item_price = menu_item.get_price()
                 food_price_list.append(item_price)
-                avg_price_food = sum(food_price_list)/len(food_price_list)
+                avg_price_food = sum(food_price_list) / len(food_price_list)
 
-        stats = MenuItemStats(total_num_menu_items,num_foods, num_drinks, avg_price_food, avg_price_drink)
+        stats = MenuItemStats(total_num_menu_items, num_foods, num_drinks, avg_price_food, avg_price_drink)
 
         return stats
 
+    @staticmethod
+    def _validate_parameter(value, name):
+        """Private method to validate inputs"""
 
+        if value is None:
+            raise ValueError("%s cannot be undefined" % (name))
 
+        if value is "":
+            raise ValueError("%s cannot be empty" % (name))
 
+    @staticmethod
+    def _validate_type(value):
+        """Private method to validate menu type"""
+        if (value is "food") or (value is "drink"):
+            return
+        else:
+            raise ValueError("Menu item Type must be food or drink")
 
-
-
+    @staticmethod
+    def _validate_id(value):
+        """ private method to validate id """
+        if type(value) != int:
+            raise ValueError(" needs to be int")

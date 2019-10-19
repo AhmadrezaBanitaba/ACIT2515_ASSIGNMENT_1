@@ -41,7 +41,7 @@ class Testmanager(unittest.TestCase):
         self.assertEqual(self.kashmir_dosa._next_available_id, 1, "Id must be one")
 
     def test_add_undefined(self):
-        """020B: unvalid add menu"""
+        """020B: invalid add menu"""
         self.logPoint()
 
         undefined_menu = None
@@ -74,7 +74,7 @@ class Testmanager(unittest.TestCase):
         self.assertEqual(menu.get_id(), 1)
 
         self.kashmir_dosa.remove_menu_item(1)
-        self.assertEqual(len(self.kashmir_dosa._menu), 0, "Team must have no players")
+        self.assertEqual(len(self.kashmir_dosa._menu), 0, "Must have no menu item")
 
     def test_remove_notint_menu_id(self):
         """ 030B: Invalid id int """
@@ -91,7 +91,7 @@ class Testmanager(unittest.TestCase):
         self.assertRaisesRegex(ValueError, "id cannot be empty", self.kashmir_dosa.remove_menu_item, self.empty_value)
 
     def test_delete_non_existent_menu(self):
-        """ 030C: Invalid Delete Player - No id existent """
+        """ 030C: Invalid Delete Menu item - No id existent """
 
         self.logPoint()
 

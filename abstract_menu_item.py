@@ -3,17 +3,28 @@ import datetime
 class AbstractMenuItem:
     """ creates menu item """ 
     
-    def __init__(self, menu_item_name, menu_item_no, date_added, price, calories):
+    def __init__(self,  menu_item_name, menu_item_no, date_added, price, calories):
+        self._id = None
+
+        self._validate_input(menu_item_name, " menu_item_name")
         self._menu_item_name = menu_item_name
+
+        self._validate_input(menu_item_no, "  menu_item_no")
         self._menu_item_no = menu_item_no
+
+        self._validate_input(date_added, "  date_added")
         self._date_added = date_added
+
+        self._validate_input(price, "  price")
         self._price = price
+
+        self._validate_input(calories, "  calories")
         self._calories = calories
 
 
-    def set_id(self, id):
+    def set_id(self, menu_item_id):
         """ sets menu item id"""
-        self._id = id 
+        self._id = menu_item_id 
 
 
     def get_id(self):
@@ -34,6 +45,7 @@ class AbstractMenuItem:
         return self._date_added
     
     def menu_item_description(self):
+        """ abstract method. returns menu item description"""
         raise NotImplementedError("abstract method")
 
     def set_price(self, price):
@@ -45,14 +57,24 @@ class AbstractMenuItem:
         return self._price
 
     def get_type(self):
-        raise NotImplementedError("abstract method")    
+        """ abstract method. returns type """
+        raise NotImplementedError("abstract method")
 
 
     @staticmethod
-    def _validate_menu_item_type(item_type):
-        if (item_type == "food") or (item_type == "drink"):
-            return 
-        else:
-            raise ValueError("Menu item must be of type food or drink")
+    def _validate_input(input, input_display):
+        """Private method to validate inputs
 
+        Args:
+            input: Input to be validated
+            input_display (string): String used in ValueError message
 
+        Raises:
+            ValueError: If input is undefined
+            ValueError: If input is empty
+        """
+        if input == None:
+            raise ValueError(input_display + " input cannot be undefined")
+
+        if input == "":
+            raise ValueError(input_display + " input cannot be empty")
