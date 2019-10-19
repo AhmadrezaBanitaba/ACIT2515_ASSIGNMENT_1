@@ -30,4 +30,4 @@ class MenuItemStats():
     def get_avg_price_drink(self):
         """ returns average price of drink  """
         return self._avg_price_drink
-
+    

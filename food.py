@@ -4,18 +4,11 @@ class Food(AbstractMenuItem):
     """ creates food """
 
     def __init__(self, menu_item_name, menu_item_no, date_added, price, calories, cuisine_country, main_ingredient, portion_size, is_vegetarian):
-        super().__init__(menu_item_name, menu_item_no, date_added, price, calories)
-
-
-
-        self._validate_input(cuisine_country, "  cuisine_country")
-        self._cuisine_country = cuisine_country
-        self._validate_input(main_ingredient, "  main_ingredient")
-        self._main_ingredient = main_ingredient
-        self._validate_input(portion_size, "  portion_size")
-        self._portion_size = portion_size
-        self._validate_input(is_vegetarian, "  _is_vegetarian")
-        self._is_vegetarian = is_vegetarian
+        super().__init__( menu_item_name, menu_item_no, date_added, price, calories)
+        self._cuisine_country= cuisine_country
+        self._main_ingredient= main_ingredient
+        self._portion_size= portion_size
+        self._is_vegetarian= is_vegetarian
 
 
 
