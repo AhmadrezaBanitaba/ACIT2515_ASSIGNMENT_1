@@ -31,9 +31,9 @@ class MenuItemManager:
         return self._next_available_id
 
     def menu_exist(self, id):
-        self._validate_id(id)
-        self._validate_parameter(id, "id")
 
+        self._validate_parameter(id, "id")
+        self._validate_id(id)
         for menu in self._menu:
             if menu.get_id() == id:
                 return True
@@ -41,8 +41,9 @@ class MenuItemManager:
         return False
 
     def remove_menu_item(self, id):
-        self._validate_id(id)
+
         self._validate_parameter(id, "id")
+        self._validate_id(id)
 
         if self.menu_exist(id) is True:
             for menu_item in self._menu:
@@ -50,8 +51,9 @@ class MenuItemManager:
                     self._menu.remove(menu_item)
 
     def get_by_id(self, id):
-        self._validate_id(id)
+
         self._validate_parameter(id, "id")
+        self._validate_id(id)
 
         for menu_item in self._menu:
             if menu_item.get_id() == id:
@@ -131,16 +133,8 @@ class MenuItemManager:
 
     @staticmethod
     def _validate_parameter(value, name):
-        """Private method to validate inputs
+        """Private method to validate inputs"""
 
-        Args:
-            value: Input to be validated
-            name: Name of input
-
-        Raises:
-            ValueError: If value is undefined
-            ValueError: If value is not given
-        """
 
         if value is None:
             raise ValueError("%s cannot be undefined" % (name))
@@ -150,14 +144,7 @@ class MenuItemManager:
 
     @staticmethod
     def _validate_type(value):
-        """Private method to validate player type
-
-        Args:
-            value (string): Type of player (either "Forward" or "Goalie")
-
-        Raises:
-            ValueError: If value is neither "Forward" or "Goalie"
-        """
+        """Private method to validate menu type"""
 
         if (value is "food") or (value is "drink"):
             return

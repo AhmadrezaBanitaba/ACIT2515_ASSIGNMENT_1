@@ -45,7 +45,8 @@ class Testmanager(unittest.TestCase):
         self.logPoint()
 
         undefined_menu = None
-        self.assertRaises(ValueError,"menu must be defined", self.kashmir_dosa.add_menu_item, undefined_menu)
+        with self.assertRaisesRegex(ValueError, 'menu_item cannot be undefined'):
+            self.kashmir_dosa.add_menu_item(undefined_menu)
 
     def test_add_menu_already_exists(self):
         """ 020C: Invalid Add menu - Menu Already Exists """
@@ -75,13 +76,19 @@ class Testmanager(unittest.TestCase):
         self.kashmir_dosa.remove_menu_item(1)
         self.assertEqual(len(self.kashmir_dosa._menu), 0, "Team must have no players")
 
-    def test_remove_invalid_menu_id(self):
-        """ 030B: Invalid remove menu Parameters """
+    def test_remove_notint_menu_id(self):
+        """ 030B: Invalid id int """
 
         self.logPoint()
+        asdf = "3"
+        self.assertRaisesRegex(ValueError,"needs to be int" ,self.kashmir_dosa.remove_menu_item, asdf)
 
-        self.assertRaises(ValueError, self.kashmir_dosa.remove_menu_item, self.undefined_value)
+    def test_remove_invalid_menu_id(self):
+        """030C: invalid remove parameter"""
+        self.logPoint()
 
+        self.assertRaisesRegex(ValueError, "id cannot be undefined", self.kashmir_dosa.remove_menu_item, self.undefined_value)
+        self.assertRaisesRegex(ValueError, "id cannot be empty", self.kashmir_dosa.remove_menu_item, self.empty_value)
 
     def test_delete_non_existent_menu(self):
         """ 030C: Invalid Delete Player - No id existent """
@@ -158,6 +165,7 @@ class Testmanager(unittest.TestCase):
 
         self.assertEqual(self.kashmir_dosa.get_by_id(2).get_price(), 6.99)
 
+
     def test_get_menu_item_stats(self):
 
         self.logPoint()
@@ -172,11 +180,11 @@ class Testmanager(unittest.TestCase):
 
         stats = self.kashmir_dosa.get_menu_item_stats()
 
+        self.assertEqual(stats.get_total_num_menu_items(), 3)
         self.assertEqual(stats.get_num_foods(), 1)
         self.assertEqual(stats.get_num_drinks(), 2)
         self.assertEqual(stats.get_avg_price_food(), 12.990000)
         self.assertEqual(stats.get_avg_price_drink(), 9.990000)
-
 
     def tearDown(self):
 

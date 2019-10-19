@@ -18,27 +18,22 @@ def print_report(menu_item_manager):
     print("  Average price of food: %f " % stats.get_avg_price_food())
     print("  Average price of drink: %f " % stats.get_avg_price_drink())
 
-    
-    
-
-
 def main():
     barley_bread = Food("barley bread", 12, datetime.date(2018, 8, 8), 12.99, 149, "India", "Barley", "small", True)
-
+    mango_lasi = Drink("mango lasis", 10, datetime.date(2017, 9, 12), 7.99, 80, "lasi producer ltd", 129.99, False,
+                        False)
     mango_lasi3 = Drink("mango lasis", 10, datetime.date(2017, 9, 12), 12.99, 80, "lasi producer ltd", 129.99, False, False)
     print(mango_lasi3.menu_item_description())
-    mango_lasi3.set_id(2)
+    mango_lasi.set_id(2)
 
     kashmir_dosa = MenuItemManager("kashmir dosa")
     kashmir_dosa.add_menu_item(barley_bread)
 
-
     kashmir_dosa.add_menu_item(mango_lasi3)
-
-
+    kashmir_dosa.update(mango_lasi)
     print_report(kashmir_dosa)
 
-    print(kashmir_dosa.menu_exist(3))
+    print(kashmir_dosa.menu_exist(2))
 
 
 if __name__ == "__main__":
